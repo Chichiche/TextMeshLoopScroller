@@ -80,6 +80,7 @@ public sealed class TextMeshLoopScroller : IDisposable
     void AllocateBuffers()
     {
         const int VertexCount = 4;
+        const int BufferMultiplier = 4;
         var bufferSize = CalcBufferSize(_text.textInfo.characterCount);
         AllocateNativeArray(ref _charInfos, bufferSize);
         AllocateNativeArray(ref _vertices, bufferSize * VertexCount);
@@ -89,15 +90,14 @@ public sealed class TextMeshLoopScroller : IDisposable
         static int CalcBufferSize(int characterCount)
         {
             const int MinCharCount = 10;
-            const int BufferMultiplier = 4;
-            return Math.Max(characterCount, MinCharCount) * BufferMultiplier;
+            return Math.Max(characterCount, MinCharCount);
         }
 
         static void AllocateNativeArray<T>(ref NativeArray<T> nativeArray, int bufferSize) where T : struct
         {
             if (nativeArray.Length >= bufferSize) return;
             if (nativeArray.IsCreated) nativeArray.Dispose();
-            nativeArray = new NativeArray<T>(bufferSize, Allocator.Persistent);
+            nativeArray = new NativeArray<T>(bufferSize * BufferMultiplier, Allocator.Persistent);
         }
     }
 
