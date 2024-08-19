@@ -35,14 +35,14 @@ public sealed class TextMeshLoopScrollView : MonoBehaviour
         _textMeshScroller.Prepare();
     }
 
-    [SerializeField] private RectTransform _transform;
-    [SerializeField] private TMP_Text _text;
-    [SerializeField] private Vector2 _spacing;
-    [SerializeField] private Vector2 _offset;
+    [SerializeField] RectTransform _transform;
+    [SerializeField] TMP_Text _text;
+    [SerializeField] Vector2 _spacing;
+    [SerializeField] Vector2 _offset;
 
-    private TextMeshLoopScroller _textMeshScroller;
+    TextMeshLoopScroller _textMeshScroller;
 
-    private void Update()
+    void Update()
     {
         _textMeshScroller?.Apply();
         _textMeshScroller?.Schedule(_offset, _spacing);
